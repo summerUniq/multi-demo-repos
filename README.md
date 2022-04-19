@@ -15,3 +15,4 @@ repos放在src文件夹下面：
 - rg-ripgrep: rg的demo
 - vscode-extension-samples: vscode 插件相关demo
 - websocket-demo: 使用websocket搭建聊天室的demo
+- typescript: typescript相关demo
