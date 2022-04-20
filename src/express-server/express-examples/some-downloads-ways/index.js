@@ -26,7 +26,22 @@ app.use(express.static('./public'))
 app.get('/getFileStream', (req, res) => {
     const file = req.query.name
     const stream = fs.createReadStream(path.resolve('./public', file))
-    stream.pipe(res)
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.attachment(file)
+    let chunks = [];
+    let size = 0;
+    stream.on('data', (chunk) => {
+        console.log('chunk', chunk);
+        chunks.push(chunk)
+        size += chunk.length
+    })
+    stream.on('end', () => {
+        const data = Buffer.concat(chunks, size)
+        console.log(size);
+        res.setHeader('content-length', size)
+        res.send(data)
+    })
+    // stream.pipe(res)
 })
 
 /**
@@ -74,6 +89,7 @@ app.use('/createBase64QrCode', (req, res) => {
     })
     data.on('end', () => {
         const data = Buffer.concat(chunks, size)
+        console.log(size);
         const base64 = "data:image/png;base64," + data.toString('base64')
         res.send(base64)
     })
