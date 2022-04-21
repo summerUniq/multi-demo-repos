@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" placeholder="输入你的内容"/>
+    <button>发送请求</button>
+    <div></div>
+    <script>
+        const div = document.querySelector('div')
+        const btn = document.querySelector('button')
+        const input = document.querySelector('input')
+        // 创建websocket对象
+        const socket = new WebSocket('ws://localhost:3000')
+        // 与websocket连接成功的回调
+    socket.addEventListener('open', () => {
+        div.innerHTML = '连接服务成功了'
+    })
+
+    btn.addEventListener('click', ()=> {
+        const dv = document.createElement('div')
+        dv.innerHTML = input.value
+        div.appendChild(dv)
+    })
+
+    socket.addEventListener('message', (e)=> {
+        debugger
+        const dv = document.createElement('div')
+        dv.innerHTML = e.data
+        div.appendChild(dv)
+    })
+    </script>
+</body>
+</html>
