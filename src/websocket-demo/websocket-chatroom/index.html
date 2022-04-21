@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket-chatroom</title>
+</head>
+<body>
+    <input type="text" placeholder="输入你的内容"/>
+    <button>发送请求</button>
+    <div></div>
+    <script>
+        const TYPE_ENTER = 0
+        const TYPE_LEAVE = 1
+        const TYPE_MESSAGE = 2
+
+        const div = document.querySelector('div')
+        const btn = document.querySelector('button')
+        const input = document.querySelector('input')
+        // 创建websocket对象
+        const socket = new WebSocket('ws://localhost:3000')
+        // 与websocket连接成功的回调
+    socket.addEventListener('open', () => {
+        div.innerHTML = '连接服务成功了'
+    })
+
+    btn.addEventListener('click', ()=> {
+      const value = input.value;
+      socket.send(value)
+      input.value = ''
+    })
+
+    socket.addEventListener('message', (e)=> {
+        const data = JSON.parse(e.data)
+        console.log(data);
+        const {msg, time, type} = data || {}
+        const dv = document.createElement('div')
+        dv.innerHTML = msg + '------' + time
+        dv.style.color = (type === TYPE_ENTER ? 'green': (type === TYPE_LEAVE? 'red' : 'black'))
+        div.appendChild(dv)
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "electron-app demo",
+  "main": "main.js",
+  "scripts": {
+    "fix": "electron-fix start",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/summerUniq/electron-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/summerUniq/electron-app/issues"
+  },
+  "homepage": "https://github.com/summerUniq/electron-app#readme",
+  "dependencies": {
+    "electron": "13.1.4",
+    "rte-controller": "1.1.2"
+  },
+  "devDependencies": {
+    "electron-fix": "^1.1.3"
+  }
+}
