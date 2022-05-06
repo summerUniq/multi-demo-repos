@@ -200,7 +200,23 @@ function formatPoint(point:typeof p) {}
 
   ```
 
-- 交叉类型
+- 交叉类型: &
+  - 类似于接口继承（extends)
+  - 组合多个类型成一个类型
+  - 交叉类型和接口继承的区别
+    - 同名属性类型冲突处理不同
+
+  ```typescript
+  interface Person {
+    name: string
+  }
+  interface Contact {
+    phone: string
+  }
+
+  type PersonDetail = Person & Contact
+  ```
+
 - 泛型和keyof
 - 索引签名类型和索引查询类型
 - 映射类型
