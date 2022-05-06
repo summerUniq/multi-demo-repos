@@ -251,6 +251,59 @@ function formatPoint(point:typeof p) {}
   id({length: 9})
   ```
 
-  -
+  - 泛型的类型变量可以有多个，并且变量类型之间还可以约束
+  - 比如： 第二个类型变量受第一个类型变量的约束
+
+  ```typescript
+  function getProp<Type, Key extends keyof Type>(obj: Type, key: Key) {
+    return obj[key]
+  }
+  getProp({name:'lll'}, 'name')
+  getProp(18, 'toFixed')
+  getProp('aon', 1)
+  ```
+
+  - 泛型接口
+    - 使用时需要显示指定类型
+    - 数组是泛型接口
+
+    ```typescript
+    interface IdFunc<Type> {
+      id: (value:Type) => Type
+      ids: () => Type[]
+    }
+
+    let obj: IdFunc<number> = {
+      id(value) { return value}
+      ids() {return [1,3,5]}
+    }
+    ```
+
+  - 泛型类
+    - 使用时可以不显示传入类型
+    - 根据需要自己决定是否显示传入类型
+
+  ```typescript
+  class Gen<NumType> {
+    defaultVal: NumType
+  }
+  ```
+
+  - Ts内置的泛型工具类型
+    - Partial: ```Partial<Type>``` Type中所有属性变成可选
+    - Readonly: ```Readonly<Type>``` Type中所有属性只读
+    - Pick: ```Pick<Type, keyof Type | keyof Type>```
+    - Record: ```Record<keys, Type>```
+
+      ```typescript
+      type RecordObj = Record<'a'|'b'|'c', string[]>
+
+      const obj: RecordObj = {
+        a: ['a'],
+        b: ['b'],
+        c: ['c']
+      }
+      ```
+
 - 索引签名类型和索引查询类型
 - 映射类型
