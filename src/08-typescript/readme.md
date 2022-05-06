@@ -218,5 +218,39 @@ function formatPoint(point:typeof p) {}
   ```
 
 - 泛型和keyof
+  - 保证类安全的情况下， 让函数等与多种类型一起工作， 从而实现复用
+  - 类型函数: 使用类型变量 ```<Type>```, 调用时指定具体的类型
+
+  ```typescript
+  function id<Type>(value: Type):Type
+  id<number>(1)
+  id<string>('a')
+  id(11)
+  ```
+  
+  - 类型参数推断可以简化泛型函数的调用
+  - 类型参数推断出的是字面量类型
+  - 泛型约束
+    - 任意类型导致无法解构，访问value.length， 解决方案：泛型约束
+    - 方法一：指定更加具体的泛型,收缩类型
+    - 方法二：添加约束 extends
+
+  ```typescript
+  function id<Type>(value: Type[]): Type[] {
+    console.log(value.length)
+    return value
+  }
+
+  interface ILength {length: number}
+  function id<Type extends ILength>(value: Type): Type {
+    console.log(value.length)
+    return value
+  }
+  id('123')
+  id([1,3,2])
+  id({length: 9})
+  ```
+
+  -
 - 索引签名类型和索引查询类型
 - 映射类型
