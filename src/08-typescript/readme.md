@@ -306,4 +306,95 @@ function formatPoint(point:typeof p) {}
       ```
 
 - 索引签名类型和索引查询类型
+  - 无法确定对象中有哪些属性
+  - 数组使用了索引类型签名
+  - 索引查询类型： ```T[key]```
+  - 同时查询多个索引类型 ```T[key1|key2]```
+  
+  ```typescript
+  interface Itype {
+    [key: string]: number
+  }
+  ```
+
 - 映射类型
+  - 基于旧类型实现新类型: in
+
+  ```typescript
+  type PropKeys = 'x' | 'y' | 'z'
+  type Type1 = {x: number; y: number; z: number}
+  // ==>
+  type type2 = {
+    [key in PropKeys]: number
+  }
+  type type3 = {
+    [key in keyof Type1]: number
+  }
+  ```
+
+## Typescript类型声明文件
+
+- x.d.ts这样的就是类型声明文件
+  - 使用已有的类型声明文件
+    - 内置类型的类型声明文件：ts为js内置Api都提供了声明文件
+      lib.dom.d.ts lib.es5.d.ts
+    - 第三方库的类型声明文件: 库自带类型声明文件（index.d.ts)；由DefinitelyTyped提供
+      - 怎么知道类型文件是哪个的？ package.json中的typyings字段来指定
+      - DefinitelyTyped是一个github仓库, 用来提供高质量的typescript类型声明
+        - 包的名称格式 @types/*
+        - 当安装@types/*类型声明包后， TS也会自动加载该类型声明包
+
+    - 创建自己的类型声明文件
+      - 项目内共享 .d.ts
+      - 为已有js文件提供类型声明: js项目迁移到TS项目; 创建第三方库
+      - 类型声明文件的编写与模块化方式有关
+      - 使用ts-loader必须有配置文件tsconfig.json， 配置文件自动生成tsc --init
+      - 为js文件添加类型声明文件： 会自动查找 文件名.d.ts
+      declare关键字： 为已存在的变量声明类型； declare可以省略（type interface前面）
+
+## 在React中使用typescript
+
+- CRA 创建typescript项目
+  - tsconfig.json
+  - x.tsx
+  - react-app-env.d.ts
+    - /// 三斜线指令
+    - 告诉ts帮我们下载react-scripts这个包中的类型声明
+    - react-scripts包含的类型声明： react react-dom node 图片等资源的类型
+
+  ```ts
+  /// <reference types="react-scripts"/>
+  ```
+
+- ts配置文件tsconfig.json
+  complierOptions
+  - target: 编译后js的语言版本
+  - lib: 指定要包含在编译中的library
+  - allowJs： 运行ts编译器编译js文件
+  - skipLibCheck: 跳过声明文件的类型检查
+  - esModuleInterop: es模块互操作， 屏蔽esmodule和commonjs之间的差异
+  - allowSyntheticDefaultImports: 允许通过import x from 'y'即使模块没有显示指定default导出
+  - module: 指定生成代码的模块化标准
+  - noEmit：编译时不生成任何文件，只进行类型检查
+  - JSX：指定jsx转化成什么形式
+  include
+- tsc命令
+  - tsc filepath --target es6
+  - tsc + filepath 会忽略tsconfig.json配置； 不跟文件路径， 启用tsconfig.json配置
+
+  - tsc --init 自动上传tsconfig.json
+
+- React中的常用类型
+  - 函数组件
+
+  ```ts
+    - FC<T>
+    - 设置默认值
+  ```
+
+  - 函数组件默认值
+
+  - 事件类型
+    - e: React.MouseEvent<触发的元素类型>
+    - ```ChangeEvent<HTMLInputElement>```
+  - class组件
