@@ -47,3 +47,5 @@ export GIT_COMMITTER_EMAIL="newEmail"
 fi
 ' HEAD
 ```
+
+然后git push --force
