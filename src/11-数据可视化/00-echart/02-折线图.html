@@ -13,10 +13,62 @@
     <div id="main" style="height: 600px;width: 800px;"></div>
     <script type="text/javascript">
         const container = document.getElementById('main')
-        const xDataArr = []
-        const yDataArr = []
+        const xDataArr = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        const yDataArr = [3000, 2800, 900, 1000, 800, 700, 1400, 1300, 900, 1000, 800, 600]
         const mychart = echarts.init(container)
-        const options = {}
+        const options = {
+            xAxis: {
+                type: 'category',
+                data: xDataArr,
+                boundaryGap: false
+            },
+            yAxis: {type: 'value'},
+            series: [
+                {
+                    type: 'line',
+                    data: yDataArr,
+                    smooth: true,
+                    lineStyle: {
+                        color: 'green',
+                        type: 'dashed'
+                    },
+                    areaStyle: {
+                        color: 'pink'
+                    },
+                    markPoint: {
+                        data: [
+                            {
+                                type: 'max',
+                                name: '最大值'
+                            },
+                            {
+                                type: 'min',
+                                name: '最小值'
+                            }
+                        ]
+                    },
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: '平均值'
+                        }]
+                    },
+                    markArea: {
+                        data: [
+                            [
+                                {xAxis: '1月'},
+                                {xAxis: '2月'}
+                            ],
+                            [
+                                {xAxis: '7月'},
+                                {xAxis: '8月'}
+
+                            ]
+                        ]
+                    }
+                }
+            ]
+        }
         mychart.setOption(options)
     </script>
 </body>
