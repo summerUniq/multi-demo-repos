@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折线图</title>
+    <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="main" style="height: 600px;width: 800px;"></div>
+    <script type="text/javascript">
+        const container = document.getElementById('main')
+        const xDataArr = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        const yDataArr = [3005, 3003, 3001, 3002, 3009, 3007, 3003, 3001, 3005, 3004, 3001, 3009]
+        const mychart = echarts.init(container)
+        const options = {
+            xAxis: {
+                type: 'category',
+                data: xDataArr
+            },
+            yAxis: {
+                type: 'value',
+                scale: true
+            },
+            series: [
+                {
+                    type: 'line',
+                    data: yDataArr
+                }
+            ]
+            
+        }
+        mychart.setOption(options)
+    </script>
+</body>
+
+</html>
